@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration Form Validation</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 4px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    .error {
+      color: red;
+      font-size: 0.9em;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <h2>User Registration</h2>
+    <form name="regForm" onsubmit="return validateForm()">
+
+      <label for="fName">First Name:</label>
+      <input type="text" id="fName" name="fName">
+      <span id="fNameError" class="error"></span>
+
+      <label for="lName">Last Name:</label>
+      <input type="text" id="lName" name="lName">
+      <span id="lNameError" class="error"></span>
+
+      <label for="email">E-mail ID:</label>
+      <input type="text" id="email" name="email">
+      <span id="emailError" class="error"></span>
+
+      <label for="mobile">Mobile Number:</label>
+      <input type="text" id="mobile" name="mobile">
+      <span id="mobileError" class="error"></span>
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password">
+      <span id="passwordError" class="error"></span>
+
+      <label for="address">Address:</label>
+      <textarea id="address" name="address"></textarea>
+      <span id="addressError" class="error"></span>
+
+      <button type="submit">Register</button>
+    </form>
+  </div>
+
+  <script>
+    function validateForm() {
+      const fName = document.forms["regForm"]["fName"].value;
+      const lName = document.forms["regForm"]["lName"].value;
+      const email = document.forms["regForm"]["email"].value;
+      const mobile = document.forms["regForm"]["mobile"].value;
+      const password = document.forms["regForm"]["password"].value;
+      const address = document.forms["regForm"]["address"].value;
+      const nameRegex = /^[A-Za-z]+$/;
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      document.getElementById("fNameError").innerHTML = "";
+      document.getElementById("lNameError").innerHTML = "";
+      document.getElementById("emailError").innerHTML = "";
+      document.getElementById("mobileError").innerHTML = "";
+      document.getElementById("passwordError").innerHTML = "";
+      document.getElementById("addressError").innerHTML = "";
+
+      let isValid = true;
+      if (fName.length < 6) {
+        document.getElementById("fNameError").innerHTML = "First Name must be at least 6 characters long.";
+        isValid = false;
+      } else if (!nameRegex.test(fName)) {
+        document.getElementById("fNameError").innerHTML = "First Name must contain only alphabets.";
+        isValid = false;
+      }
+      if (lName.trim() === "") {
+        document.getElementById("lNameError").innerHTML = "Last Name cannot be empty.";
+        isValid = false;
+      }
+      if (!emailRegex.test(email)) {
+        document.getElementById("emailError").innerHTML = "Invalid email format (e.g., name@domain.com).";
+        isValid = false;
+      }
+      if (mobile.length !== 10 || isNaN(mobile)) {
+        document.getElementById("mobileError").innerHTML = "Mobile Number must contain exactly 10 digits.";
+        isValid = false;
+      }
+      if (password.length < 6) {
+        document.getElementById("passwordError").innerHTML = "Password must be at least 6 characters long.";
+        isValid = false;
+      }
+      if (address.trim() === "") {
+        document.getElementById("addressError").innerHTML = "Address cannot be empty.";
+        isValid = false;
+      }
+      return isValid;
+    }
+  </script>
+
+</body>
+
+</html>
